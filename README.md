@@ -18,3 +18,14 @@ over the [samples] [aws-samples] provided by AWS.
 [aws-samples]: http://aws.amazon.com/cloudformation/aws-cloudformation-templates/
 [graphviz]: http://www.graphviz.org/
 [samples]: https://github.com/benbc/cloud-formation-viz/tree/master/samples
+
+
+
+sample usage for caligula
+===
+```
+cd [fm-systems-home]/cloud-formation-viz
+export SRC_DIR=[fm-systems-home]/caligula/cloudformation/
+[fm-systems-home]/cloud-formation-viz/generate-from-directory
+```
+will produce svg's in ```cloud-formation-viz/output/```

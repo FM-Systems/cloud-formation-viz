@@ -1,0 +1,35 @@
+#!/usr/bin/python
+
+import os
+import subprocess
+import glob
+import re
+
+def main():
+    if os.environ.get('SRC_DIR') is None:
+        print "Please provide SRC_DIR env var.."
+        return
+    for template in templates():
+        print template
+        print output_for(template)
+        render(template)
+
+def templates():
+    directory = os.environ['SRC_DIR']
+    files = glob.glob("{0}*.json".format(directory))
+    return files
+
+def render(filename):
+    p = subprocess.Popen('cat {0} | ./cfviz | dot -Tsvg -o {1}'.format(filename, output_for(filename)), shell=True,
+                         stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    output, _ = p.communicate(input=filename)
+    if output:
+        print(filename)
+        print(output)
+
+def output_for(name):
+    regex = r"%s(.*)" % os.environ['SRC_DIR']
+    return 'output/%s.svg' % re.search(regex, name).group(1)
+
+if __name__ == '__main__':
+    main()
